@@ -1,3 +1,4 @@
+#!/bin/bash
 function dot_os() {
     export DOT_KERNEL=`uname -s | tr '[:upper:]' '[:lower:]'`
     if [ "$DOT_KERNEL" == "linux" ]; then
