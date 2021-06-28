@@ -6,13 +6,9 @@ AR_MODULE="heckheating"
 #TODO 4jane
 
 # TODO: make platform agnostic
-if [ "$AR_OS" == "linux_arch" ] || [ "$AR_OS" == "darwin_macos" ]; then
+if [ "$DOT_OS" == "linux_arch" ] || [ "$DOT_OS" == "linux_fedora" ]; then
     hhDir="$HOME/.local/share/hh3"
     configDir="$HOME/.config/hh3"
-    if [ "$AR_OS" == "darwin_macos" ]; then
-        hhDir="$HOME/.hh3"
-        configDir="$HOME/Library/Application Support/hh3"
-    fi
     # Clone the repo if we don't have it, and if we might have keys
     [ ! -e "$hhDir" ] && [ -e "$HOME/.ssh" ] \
         && mkdir -p "$hhDir" \

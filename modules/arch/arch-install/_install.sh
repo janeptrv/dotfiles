@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #TODO 4jane
+#TODO generate private key
 source $HOME/.adryd/constants.sh
 AR_MODULE="archinstall"
 
