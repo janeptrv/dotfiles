@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #TODO 4jane
 #TODO generate private key
-source $HOME/.adryd/constants.sh
-AR_MODULE="archinstall"
+source $DOT_ROOT/constants.sh
+DOT_MODULE="archinstall"
 
 # Username
 while [ "$username" == "" ] || [ "$username" == "root" ]; do
@@ -54,15 +54,15 @@ done
 
 installTargetUUID=`lsblk -l $installTargetDev -o PATH,UUID | grep "$installTargetDev" | grep -oP "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"`
 
-[ "$timezone" == "" ] && timezone="America/Toronto"
-[ "$language" == "" ] && language="en_CA.UTF-8"
+[ "$timezone" == "" ] && timezone="America/New_York"
+[ "$language" == "" ] && language="en_US.UTF-8"
 [ "$keymap" == "" ] && keymap="us"
 [ "$basePackages" == "" ] && basePackages=("linux" "linux-firmware" "linux-headers" "base" "base-devel" "man-db" "man-pages" "btrfs-progs"
-    "efibootmgr" "networkmanager" "neovim" "git" "zsh")
+    "efibootmgr" "networkmanager" "neovim" "git" "fish")
 
 log silly "Calling partitioning script"
 installTargetDev=$installTargetDev host=$host diskPassword=$diskPassword \
-    $AR_DIR/systems/personal/arch-install/partition.sh
+    $DOT_ROOT/modules/arch/arch-install/partition.sh
 
 function ucodepkg() {
     cpuType=`cat /proc/cpuinfo | grep vendor_id | sed "s/vendor_id\t: //g" | head -1`
@@ -77,16 +77,16 @@ pacstrap /mnt ${basePackages[*]}
 log info "Writing fstab"
 genfstab /mnt -U >> /mnt/etc/fstab
 log info "Copying over .adryd"
-cp -r $AR_DIR /mnt$AR_DIR
+cp -r $DOT_ROOT /mnt$DOT_ROOT
 
 rootUUID=`lsblk -o UUID,PARTLABEL | grep "$host" | grep -oP "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"`
 username=$username password=$password host=$host timezone=$timezone language=$language keymap=$keymap rootUUID=$rootUUID ucode=`ucodepkg`\
-    arch-chroot /mnt bash $AR_DIR/systems/personal/arch-install/configure.sh
+    arch-chroot /mnt bash $DOT_ROOT/systems/personal/arch-install/configure.sh
 
 passsword=
 
 # Remove coppied dotfiles
-log silly "Remove coppied dotfiles"
-rm -rf /mnt/$AR_DIR
-log silly "Placing install script in new home folder"
-cp $AR_DIR/download.sh /mnt/home/$username/install.sh
+# log silly "Remove coppied dotfiles"
+# rm -rf /mnt/$DOT_ROOT
+# log silly "Placing install script in new home folder"
+# cp $DOT_ROOT/download.sh /mnt/home/$username/install.sh

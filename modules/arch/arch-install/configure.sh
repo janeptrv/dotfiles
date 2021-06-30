@@ -1,6 +1,6 @@
 #/bin/bash
 source $HOME/.adryd/constants.sh
-AR_MODULE="archinstall configure"
+DOT_MODULE="archinstall configure"
 
 log info "Creating user"
 useradd -mG wheel $username
@@ -62,7 +62,8 @@ initrd /$ucode.img
 initrd /initramfs-linux.img
 EOF
 fi
-echo "options rd.luks.name=$rootUUID=$host root=/dev/mapper/$host rootflags=subvol=root rw loglevel=3 rd.udev.log_priority=3" >> /boot/loader/entries/archlinux.conf
+# rd.luks.name=$rootUUID=$host 
+echo "options root=/dev/mapper/$host rootflags=subvol=root rw loglevel=3 rd.udev.log_priority=3" >> /boot/loader/entries/archlinux.conf
 
 
 log info "Configuring mkinitcpio"
@@ -71,7 +72,7 @@ sed -i "s:BINARIES=():BINARIES=(/usr/bin/btrfs):" /etc/mkinitcpio.conf
 sed -i "s/^HOOKS=([a-zA-Z0-9\-_ ]*)/HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt filesystems fsck)/" /etc/mkinitcpio.conf
 # popsicle needs battery or it will show completely wrong battery levels
 # also i915 to make no blinky when xorg
-[ "$host" == "popsicle" ] && sed -i "s/MODULES=([a-zA-Z0-9\-_ ]*)/MODULES=(i915 nvidia battery)/" /etc/mkinitcpio.conf
+[ "$host" == "elpresidente" ] && sed -i "s/MODULES=([a-zA-Z0-9\-_ ]*)/MODULES=(i915 nvidia battery)/" /etc/mkinitcpio.conf
 #[ "$host" == "leaf" ] && sed -i "s/MODULES=([a-zA-Z0-9\-_ ]*)/MODULES=(amdgpu qxl)/" /etc/mkinitcpio.conf
 log info "Rebuilding initramfs"
 mkinitcpio -P &> /dev/null

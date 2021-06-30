@@ -32,7 +32,9 @@ if [ "$DOT_OS" = "linux_fedora" ]; then
   fi
 elif [ "$DOT_OS" = "linux_arch" ]; then
   log info "arch install"
-  if [ "$1" = "dots" ]; then
+  if ["$USERNAME" = "root"] && ["$HOSTNAME" == "archiso"]; then
+    $DOT_ROOT/modules/arch/arch-install/_install.sh
+  elif [ "$1" = "dots" ]; then
     log info "installing only dots"
     dots=("bash" "fish" "git")
     for dot in ${dots[@]}; do
@@ -47,6 +49,11 @@ elif [ "$DOT_OS" = "linux_arch" ]; then
     for module in $DOT_ROOT/modules/common/**"$*"/install.sh; do
       . $module
     done
+    if [ "$PERSONAL" = "yes" ]; then
+      for module in $DOT_ROOT/modules/common/**"$*"/install.sh; do
+        . $module
+      done
+    fi
   fi
 fi
 

@@ -1,6 +1,6 @@
 #/bin/bash
 source $HOME/.adryd/constants.sh
-AR_MODULE="archinstall partitioning"
+DOT_MODULE="archinstall partitioning"
 log tell "\"$installTargetDev\", \"/dev/disk/by-partlabel/EFI\" and \"/dev/disk/by-partlabel/$host\" will be formatted"
 
 mountOptions=defaults,x-mount.mkdir
@@ -30,12 +30,12 @@ sleep 5
 log info "Making boot partition"
 mkfs.fat -F 32 -n EFI /dev/disk/by-partlabel/EFI &> /dev/null
 
-log info "Making root partition"
-log silly "cryptsetup luksFormat"
-echo "$diskPassword" | cryptsetup luksFormat /dev/disk/by-partlabel/"$host" -q > /dev/null
-log silly "cryptsetup open"
-echo "$diskPassword" | cryptsetup open /dev/disk/by-partlabel/"$host" "$host" > /dev/null
-diskPassword=
+# log info "Making root partition"
+# log silly "cryptsetup luksFormat"
+# echo "$diskPassword" | cryptsetup luksFormat /dev/disk/by-partlabel/"$host" -q > /dev/null
+# log silly "cryptsetup open"
+# echo "$diskPassword" | cryptsetup open /dev/disk/by-partlabel/"$host" "$host" > /dev/null
+# diskPassword=
 
 log info "Making btrfs partition"
 log silly "mkfs.btrfs"
