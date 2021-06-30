@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#TODO 4jane
-#TODO generate private key
 source $DOT_ROOT/constants.sh
 DOT_MODULE="archinstall"
 

@@ -3,7 +3,6 @@ source $HOME/.adryd/constants.sh
 source $AR_DIR/lib/os.sh
 source $AR_DIR/lib/node.sh
 AR_MODULE="reflector"
-#TODO 4jane
 
 
 if [ "$AR_OS" == "linux_arch" ] && pacman -Q reflector &> /dev/null; then

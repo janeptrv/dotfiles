@@ -32,7 +32,7 @@ if [ "$DOT_OS" = "linux_fedora" ]; then
   fi
 elif [ "$DOT_OS" = "linux_arch" ]; then
   log info "arch install"
-  if ["$USERNAME" = "root"] && ["$HOSTNAME" == "archiso"]; then
+  if ["$USERNAME" = "root"] && ["$HOSTNAME" = "archiso"]; then
     $DOT_ROOT/modules/arch/arch-install/_install.sh
   elif [ "$1" = "dots" ]; then
     log info "installing only dots"
